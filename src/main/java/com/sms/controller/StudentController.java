@@ -46,4 +46,20 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.OK).body(result.get());
         }
     }
+
+    @DeleteMapping("/students/{id}")
+    public ResponseEntity<Object> deleteStudent(@PathVariable String id){
+        Optional<Student> result = this.studentService.findById(id);
+
+        if(result.isEmpty()){
+            Message error = new Message();
+            error.setStatus("Not Found");
+            error.setMessage("No Student record found using this " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+        else {
+            this.studentService.delete(result.get());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+        }
+    }
 }
