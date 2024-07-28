@@ -62,4 +62,20 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
         }
     }
+
+    @PutMapping("/students/{id}")
+    public ResponseEntity<Object> updateStudent(@PathVariable String id, @RequestBody Student student, @RequestBody String email){
+        Optional<Student> result = this.studentService.findById(id);
+
+        if(result.isEmpty()){
+            Message error = new Message();
+            error.setStatus("Not Found");
+            error.setMessage("No Student record found using this" + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+        else {
+            student.setEmail(email);
+            return ResponseEntity.status(HttpStatus.OK).body("Updated");
+        }
+    }
 }
