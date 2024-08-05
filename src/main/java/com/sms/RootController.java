@@ -8,6 +8,6 @@ public class RootController {
 
     @GetMapping("/")
     public String healthCheck(){
-        return "Application is up and running v1.1";
+        return "Application is up and running v1.2";
     }
 }
